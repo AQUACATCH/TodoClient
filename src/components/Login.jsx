@@ -7,6 +7,7 @@ import { Input } from '@heroui/react'
 import { Card } from '@heroui/react'
 import React from 'react'
 import { useState } from 'react'
+import { login } from '../api'
 
 export const Login = ({ setIsLoggedIn }) => {
     const [username, setUsername] = useState('')
@@ -14,12 +15,12 @@ export const Login = ({ setIsLoggedIn }) => {
     const [Error, setError] = useState('')
     //Temp
     const MyUsers = [
-        {username: 'Fecaa', password: 'asd12345'},
-        {username: 'Bedex', password: 'asd12345'}
+        { username: 'Fecaa', password: 'asd12345' },
+        { username: 'Bedex', password: 'asd12345' }
     ]
 
-    const handleLogin=()=> {
-        const currentUser = MyUsers.find((obj) => obj.username== username)
+    const handleLogin = async () => {
+        /*const currentUser = MyUsers.find((obj) => obj.username== username)
         if(currentUser != null){
             if(currentUser.password == password){
                 setIsLoggedIn(true)
@@ -28,6 +29,17 @@ export const Login = ({ setIsLoggedIn }) => {
             }
         } else{
             setError('** Wrong Username!')
+        }*/
+        try {
+            const data =await login(username, password)
+            console.log(data);
+            setIsLoggedIn(data.success)
+            if(!data.success){
+                setError("*"+data.msg)
+            }
+        } catch (error) {
+            console.log(error)
+            setError(error.response?.data?.msg || "Failed to connect to server!")
         }
 
 
@@ -38,26 +50,26 @@ export const Login = ({ setIsLoggedIn }) => {
                 <Card.Title className='text-xl text-center'>Login</Card.Title>
                 <Card.Description className='text-red-500'>{Error}</Card.Description>
             </Card.Header>
-                <Card.Content>
-                    <div className="flex flex-col gap-4">
-                        <TextField name="username" type="username">
-                            <Label>Username</Label>
-                            <Input placeholder="Example" variant="secondary" value={username} onChange={(e)=> setUsername(e.target.value)}/>
-                        </TextField>
-                        <TextField name="password" type="password">
-                            <Label>Password</Label>
-                            <Input placeholder="••••••••" value={password} onChange={(e)=> setPassword(e.target.value)} variant="secondary" />
-                        </TextField>
-                    </div>
-                </Card.Content>
-                <Card.Footer className="mt-4 flex flex-col gap-2">
-                    <Button className="w-full" type="submit" onClick={()=> handleLogin()}>
-                        Sign In
-                    </Button>
-                    <Link isDisabled={true} className="text-center text-sm" href="#">
-                        Forgot password?
-                    </Link>
-                </Card.Footer>
+            <Card.Content>
+                <div className="flex flex-col gap-4">
+                    <TextField name="username" type="username">
+                        <Label>Username</Label>
+                        <Input placeholder="Example" variant="secondary" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </TextField>
+                    <TextField name="password" type="password">
+                        <Label>Password</Label>
+                        <Input placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} variant="secondary" />
+                    </TextField>
+                </div>
+            </Card.Content>
+            <Card.Footer className="mt-4 flex flex-col gap-2">
+                <Button className="w-full" type="submit" onClick={() => handleLogin()}>
+                    Sign In
+                </Button>
+                <Link isDisabled={true} className="text-center text-sm" href="#">
+                    Forgot password?
+                </Link>
+            </Card.Footer>
         </Card>
     )
 }
