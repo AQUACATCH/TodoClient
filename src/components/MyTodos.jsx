@@ -17,11 +17,10 @@ export const MyTodos = ({ setIsLoggedIn }) => {
   const [remaining, setRemaining] = useState(0)
   const [icon, setIcon] = useState(null)
   const [msgvisible, setmsgvisible] = useState(false)
-  const [TimeSpent, setTimeSpent] = useState(0)
   useEffect(() => {
-    const timer = setTimeout(() => setTimeSpent(prev => prev + 1), 1000)
-    console.log(timer)
-  }, [TimeSpent])
+    const timer = setTimeout(() => prev => prev + 1, 1000)
+    timer == 5 && setmsgvisible(false)
+  }, [])
 
   useEffect(() => {
     if (!todos) return
