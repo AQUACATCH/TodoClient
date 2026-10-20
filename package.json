@@ -13,10 +13,12 @@
     "@heroui/react": "^3.2.6",
     "@heroui/styles": "^3.2.6",
     "axios": "^1.20.0",
+    "css": "^3.0.0",
     "motion": "^14.2.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-icons": "^5.7.0",
+    "tailwind": "^4.0.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
