@@ -7,7 +7,7 @@ import './App.css'
 import { Login } from './components/Login'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
 
   return (
     <div className='flex items-center justify-center h-screen bg-purple-900'>
