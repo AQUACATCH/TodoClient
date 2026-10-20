@@ -17,6 +17,11 @@ export const MyTodos = ({ setIsLoggedIn }) => {
   const [remaining, setRemaining] = useState(0)
   const [icon, setIcon] = useState(null)
   const [msgvisible, setmsgvisible] = useState(false)
+  const [TimeSpent, setTimeSpent] = useState(0)
+  useEffect(() => {
+    const timer = setTimeout(() => setTimeSpent(prev => prev + 1), 1000)
+    console.log(timer)
+  }, [TimeSpent])
 
   useEffect(() => {
     if (!todos) return
@@ -64,18 +69,20 @@ export const MyTodos = ({ setIsLoggedIn }) => {
 
   return (
     <div className='w-full'>
-      <motion.div style={{ transform: `translate(-50%, -50%)`, display: `${msgvisible ? 'block' : 'none'}` }} className='absolute left-[50%] right-[50%] top-15 w-full max-w-[400px]' initial={{ top: -100 }}
-        animate={{ top: 40 }}
-        transition={{duration: 2}}
+      <div style={{display: `${msgvisible ? 'block' : 'none'}` }}>
+        <motion.div style={{ transform: `translate(-50%, -50%)` }} className='absolute left-[50%] right-[50%] top-15 w-full max-w-[400px]' initial={{ top: -100 }}
+          animate={msgvisible ? { top: 40 }: {top: -100}}
+          transition={{ duration: 2 }}
         >
-        <Alert className='max-w-full' status={icon}>
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>{msg}</Alert.Title>
-          </Alert.Content>
-          <CloseButton />
-        </Alert>
-      </motion.div>
+          <Alert className='max-w-full' status={icon}>
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>{msg}</Alert.Title>
+            </Alert.Content>
+            <CloseButton />
+          </Alert>
+        </motion.div>
+      </div>
       <Button variant='danger' className='absolute top-5 right-5' onClick={() => setIsLoggedIn(false)}>Kijelentkezés</Button>
       <div className='w-full max-w-[1200px] bg-white p-10 rounded-4xl shadow-2xl mx-auto'>
         <h2 className='flex items-center flex-col p-3 max-w-3xl m-auto font-bold text-3xl'>My Todos</h2>
